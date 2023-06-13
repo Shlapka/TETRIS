@@ -1,0 +1,55 @@
+package Main;
+
+public class Player {
+
+    private int score; // оцінка гравця
+    private int level; // рівень гравця
+    private int linesCleared;  //кількість рядків, які гравець заповнив
+
+    public Player(int score, int level) { // Конструктор класу
+        this.score = score;
+        this.level = level;
+    }
+
+    public int getScore() {
+        return score;
+    } // Метод, що повертає очки гравця
+
+    public int getLevel() {
+        return level;
+    } // Метод, що повертає рівень гравця
+
+    public void clearedLine() { // Метод, який збільшує кількість заповнених рядків
+        linesCleared++;
+        if (linesCleared % 10 == 0) {
+            if (level < 9) {
+                level++;
+            }
+        }
+    }
+
+    public void addScore(int rowCompleted) { // Метод, який додає очки гравцю в залежності від кількості заповнених рядків
+        switch (rowCompleted) {
+            case 1:
+                score += 40 * (level + 1);
+                break;
+            case 2:
+                score += 100 * (level + 1);
+                break;
+            case 3:
+                score += 300 * (level + 1);
+                break;
+            case 4:
+                score += 1200 * (level + 1);
+                break;
+            default:
+                break;
+        }
+    }
+
+    // Метод, який додає 1 до очків гравця
+    public void addScore() {
+        score += 1;
+    }
+
+}

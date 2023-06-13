@@ -1,0 +1,52 @@
+package Main;
+
+import java.awt.*;
+
+public class EndScreen {
+    public Rectangle menu = new Rectangle(200, 300, 200, 50);
+    public Point mousePoint; // Ініціалізуємо mousePoint
+
+    public EndScreen() {
+        mousePoint = new Point(0, 0);
+    }
+
+    // Функція для ініціалізації класу
+    public void init() {
+        checkScore(); // Перевіряємо рахунок
+    }
+
+    public void checkScore() { // Функція для перевірки рахунку
+        int[] score = Scoring.readFile(Scoring.HIGHSCOREPATH); // Зчитуємо рахунки з файлу
+        for (int i = 0; i < score.length; i++) {
+            if (score[i] < Controller.recentScore) {
+                // Якщо поточний рахунок більший за поточний найкращий рахунок
+                for (int j = score.length - 1; j > i; j--) {  // Перебираємо всі рахунки
+                    // Переставляємо інші рахунки вниз
+                    score[j] = score[j - 1];
+                }
+                score[i] = Controller.recentScore; // Зберігаємо рахунки у файл
+                Scoring.SaveScores(score);
+                break;
+            }
+        }
+    }
+
+    public void render(Graphics g) { // Функція для відображення екрану поразки
+        g.setColor(Color.black);
+        g.fillRect(0, 0, Controller.WIDTH, Controller.HEIGHT); // Заповнюємо фон
+        g.setColor(Color.orange);
+        g.drawString("Поразка...", Controller.WIDTH / 2 - g.getFontMetrics().stringWidth("Поразка...") / 2, 175); // Виводимо текст "Поразка..."
+        g.drawString("Рахунок: " + Controller.recentScore, Controller.WIDTH / 2 - g.getFontMetrics().stringWidth("Рахунок: " + Controller.recentScore) / 2, 220); // Виводимо поточний рахунок
+        g.setColor(new Color(144, 157, 168));
+        if (menu.contains(mousePoint)) {
+            g.fillRoundRect(menu.x, menu.y, menu.width, menu.height, 25, 25);
+        }
+        g.setColor(Color.red);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setStroke(new BasicStroke(3)); // встановлюємо новий стиль лінії з товщиною 3
+        g.drawRoundRect(menu.x, menu.y, menu.width, menu.height, 25, 25);
+        g.setColor(Color.orange);
+        g.drawString("Меню", Controller.WIDTH / 2 - g.getFontMetrics().stringWidth("Меню") / 2, menu.y + 30);
+    }
+}
+//Клас EndScreen відповідає за екран поразки гравця в грі Tetris.

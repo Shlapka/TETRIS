@@ -1,0 +1,56 @@
+package Main;
+
+import java.awt.*;
+
+public class HighScores {
+    public Rectangle back; // Область, яка відповідає за кнопку "назад"
+    public Point mousePoint; // Точка, де користувач клацнув мишею
+
+    public int[] scores = {0, 0, 0, 0, 0}; // Масив, який містить рекорди
+
+    public void init() { // Ініціалізація змінних
+        mousePoint = new Point(0, 0);
+        back = new Rectangle(Controller.WIDTH / 2 - 100, 400, 200, 50); // Встановлення розміру і положення кнопки "назад"
+        scores = Scoring.readFile(Scoring.HIGHSCOREPATH); // Зчитування рекордів з файлу
+    }
+
+    public void render(Graphics g) { // Візуалізація елементів
+        g.setColor(Color.black);
+        g.fillRect(0, 0, Controller.WIDTH, Controller.HEIGHT); // Закраска фону чорним кольором
+        g.setColor(Color.blue);
+        g.fillRoundRect(100, 50, Controller.WIDTH / 3 * 2, Controller.HEIGHT / 3 * 2, 25, 25); // Квадрат, в якому будуть відображатися рекорди
+        g.setColor(Color.orange);
+        g.drawString("Рекорди", Controller.WIDTH / 2 - g.getFontMetrics().stringWidth("Рекорди") / 2, 100); // Відображення назви сторінки
+        for (int i = 0; i < scores.length; i++) {
+            g.drawString("" + scores[i], Controller.WIDTH / 2 - 50, 150 + 40 * i); // Відображення рекордів у відведеному місці
+        }
+        g.setColor(new Color(144, 157, 168));
+        if (back.contains(mousePoint)) { // Якщо мишка знаходиться на кнопці "назад", то вона змінює колір
+            g.fillRoundRect(back.x, back.y, back.width, back.height, 25, 25);
+        }
+        g.setColor(Color.orange);
+        g.drawString("Повернутися", back.x + back.x / 2 - g.getFontMetrics().stringWidth("Повернутися") / 2, back.y + 35); // Відображення тексту кнопки "назад"
+        g.setColor(Color.red);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setStroke(new BasicStroke(3)); // Встановлення стиль лінії з товщиною 3
+        g.drawRoundRect(back.x, back.y, back.width, back.height, 25, 25);
+    }
+
+    public void goBack() {
+        Controller.switchClasses(Controller.STATE.MENU);
+    } //переключає поточний стан гри на меню
+
+}
+// Клас HighScores відповідає за відображення екрану з рекордами гравців.
+//
+//Змінні back і mousePoint відповідають за кнопку "назад" і координати миші відповідно.
+//
+//Масив scores містить рекорди гравців, які зчитуються з файлу за допомогою методу readFile класу Scoring.
+//
+//Метод init() ініціалізує змінні back і mousePoint, а також зчитує рекорди з файлу.
+//
+//Метод render(Graphics g) відображає різні елементи на екрані, включаючи фон, назву сторінки "Рекорди", рекорди гравців і кнопку "назад".
+//
+//Метод goBack() переключає поточний стан гри на меню за допомогою методу switchClasses класу Controller.
+//
+//У загальному, цей клас відповідає за відображення екрану з рекордами та можливість повернутися до меню.

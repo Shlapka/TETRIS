@@ -1,0 +1,21 @@
+package Main;
+
+import java.applet.Applet;
+
+import javax.swing.*;
+
+public class Frame extends Applet { // Визначення класу Frame, який розширює клас Applet
+    static JFrame window = new JFrame(); // Створення статичного об'єкту JFrame з назвою window
+
+    public static void main(String[] args) {
+        window.setIconImage(new ImageIcon("images/tetrisicon.png").getImage()); // Встановлення значка вікна
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Встановлення дії при закритті вікна
+        window.setContentPane(new Controller()); // Встановлення контролера вмісту вікна
+        window.pack(); // Автоматично змінити розмір вікна на розмір вмісту
+        window.setSize(StartingMenu.WIDTH, StartingMenu.HEIGHT); // Встановлення розміру вікна
+        window.setResizable(false); // Заборона зміни розміру вікна
+        window.setLocationRelativeTo(null); // Встановлення центрування вікна на екрані
+        window.setTitle("Tetris"); // Встановлення заголовку вікна
+        window.setVisible(true); // Зробити вікно видимим
+    }
+}
