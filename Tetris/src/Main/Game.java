@@ -135,7 +135,7 @@ public class Game {
         }
     }
 
-    public void updateBlockPosition(boolean update, boolean extraPoint) { // Метод для оновлення позиції блоку
+    public void synchronized updateBlockPosition(boolean update, boolean extraPoint) { // Метод для оновлення позиції блоку
         boolean canUpdate = true;
         // перевірка, чи існує блок для управління
         if (controlPiece != null) {
